@@ -94,7 +94,10 @@ For Software:RealBreath™ is a web-based parody application that mimics biometr
 
 ### Project Demo
 # Video
-<video controls src="20250802-1118-51.2265723.mp4" title="Title"></video>
+<!-- <video controls src="20250802-1118-51.2265723.mp4" title="Title"></video> -->
+
+https://drive.google.com/file/d/1xzVP3ML0FtZTiYIkRD_bSDngsTzumgx8/view?usp=sharing
+
 This is a site for determing our breathing capacity.App recognizes your gender and gives a certificate including the review of breathing ,gender etc...
 
 ## Team Contributions
