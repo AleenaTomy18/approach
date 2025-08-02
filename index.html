@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Assistant </title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      background: #f0f4f8;
+      padding: 1rem 2rem;
+      color: #222;
+    }
+    h2 {
+      text-align: center;
+      color: #2a2a72;
+    }
+    #userInput {
+      width: 80%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+    }
+    button {
+      padding: 0.55rem 1rem;
+      font-size: 1rem;
+      margin-left: 0.5rem;
+      border-radius: 5px;
+      border: none;
+      background: #2a2a72;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #4545a6;
+    }
+    #chat {
+      margin-top: 2rem;
+      white-space: pre-wrap;
+      background: white;
+      border-radius: 8px;
+      padding: 1rem;
+      min-height: 200px;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+      font-size: 1.1rem;
+      line-height: 1.4;
+    }
+    .user {
+      color: #444;
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+    .bot {
+      color: #1a237e;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <h2>💬 AI Assistant (Manglish)</h2>
+  <input id="userInput" placeholder="Type something..." autocomplete="off" />
+  <button onclick="sendMessage()">Send</button>
+
+  <div id="chat"></div>
+
+  <script>
+    const chatBox = document.getElementById('chat');
+    const input = document.getElementById('userInput');
+
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') sendMessage();
+    });
+
+    async function sendMessage() {
+      const message = input.value.trim();
+      if (!message) return;
+
+      appendMessage('You', message, 'user');
+      input.value = '';
+      input.disabled = true;
+
+      try {
+        const res = await fetch('http://localhost:3000/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message }),
+        });
+
+        const data = await res.json();
+        appendMessage('Bot', data.reply, 'bot');
+        speak(data.reply);
+      } catch (err) {
+        appendMessage('Error', "Couldn't reach server. Try again.", 'bot');
+      } finally {
+        input.disabled = false;
+        input.focus();
+      }
+    }
+
+    function appendMessage(sender, text, className) {
+      chatBox.innerHTML += `\n\n<span class="${className}">${sender}:</span> ${text}`;
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+    function speak(text) {
+      if (!('speechSynthesis' in window)) return;
+
+      const synth = window.speechSynthesis;
+      const utterance = new SpeechSynthesisUtterance(text);
+
+      // Choose a voice close to Indian English (good for Manglish)
+      const voices = synth.getVoices();
+      const voice = voices.find(
+        v => v.lang === 'en-IN' || v.lang.startsWith('en-')
+      );
+      if (voice) utterance.voice = voice;
+
+      utterance.rate = 1;
+      synth.speak(utterance);
+    }
+  </script>
+</body>
+</html>

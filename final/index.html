@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RealBreath™ Verification</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>RealBreath™ Verification</h1>
+    <p>Please breathe</p>
+
+    <div class="circle" id="breath-circle"></div>
+
+    <button id="verify-btn">Start Analysis</button>
+    <div id="result" class="result"></div>
+
+    <div id="question-section" style="display:none;">
+      <p id="question"></p>
+      <input type="text" placeholder="Your answer..." id="answer" />
+      <button id="next-btn">Next</button>
+    </div>
+
+    <div id="certificate-section" style="display:none;">
+      <button id="generate-certificate">Get Your Official Certificate</button>
+      <div id="certificate" class="certificate" style="display:none;">
+        <h2>Certificate of Breath-Based Verification</h2>
+        <p>This certifies that</p>
+        <h3 id="cert-name">[Unknown]</h3>
+        <p>has successfully passed the RealBreath™ authenticity scan.</p>
+        <p><strong>Breath Rating:</strong> <span id="cert-rating">Undefined</span></p>
+        <p><strong>Gender Identity:</strong> <span id="cert-gender">???</span></p>
+        <p><strong>Animal Essence:</strong> <span id="cert-animal">Unclassified</span></p>
+        <div class="signature">
+          <span>Sniff Bot 9000</span>
+          <span>RealBreath™ Authority</span>
+        </div>
+        <button onclick="window.print()">Print / Download</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
